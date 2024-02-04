@@ -5,6 +5,7 @@
 
 package org.example;
 
+import org.example.Utility.Player;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -18,6 +19,20 @@ import org.springframework.context.annotation.Configuration;
 )
 public class BeanConfig {
     public BeanConfig() {
+    }
+
+    @Bean
+    public Player player() {
+
+        Player player = new Player();
+
+        player.setHp(0L);
+        player.setY(0L);
+        player.setX(0L);
+        player.setName("Blank");
+        player.setLvl(0L);
+
+        return player;
     }
 
     @Bean

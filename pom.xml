@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.3.13</version> <!-- Użyj odpowiedniej wersji Spring -->
+            <version>5.3.31</version> <!-- Użyj odpowiedniej wersji Spring -->
         </dependency>
 
     </dependencies>

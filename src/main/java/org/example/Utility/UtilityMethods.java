@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.player.Player;
+import org.example.player.UtilityPlayer;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class UtilityFunction {
+public class UtilityMethods {
     @Autowired
     private WebDriver webDriver;
 
@@ -34,7 +36,7 @@ public class UtilityFunction {
     public void printPlayerCoords() {
         JavascriptExecutor js = (JavascriptExecutor)this.webDriver;
 
-        Player player = utilityPlayer.updatePlayer();
+        Player player = utilityPlayer.updatePlayer(webDriver);
 
         log.info("Coordinate x: "+player.getX()+", Coordinate y:"+player.getY());
     }

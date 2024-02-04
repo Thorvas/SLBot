@@ -1,4 +1,4 @@
-package org.example.Utility;
+package org.example.player;
 
 import lombok.Data;
 

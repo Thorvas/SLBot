@@ -6,7 +6,7 @@
 package org.example.game;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.Utility.UtilityFunction;
+import org.example.Utility.UtilityMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -26,7 +26,7 @@ public class BotInit {
     @Autowired
     private WebDriver webDriver;
     @Autowired
-    private UtilityFunction utilityFunction;
+    private UtilityMethods utilityFunction;
 
     public BotInit() {
     }
@@ -51,9 +51,8 @@ public class BotInit {
             utilityFunction.movePlayerDown(5);
 
             log.info("Event ended.");
-        } catch (Exception var3) {
+        } catch (InterruptedException var3) {
             log.error(var3.toString());
         }
-
     }
 }

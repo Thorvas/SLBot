@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package org.example.Utility;
+package org.example.monster;
 
 import lombok.Data;
 

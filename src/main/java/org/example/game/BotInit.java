@@ -51,6 +51,8 @@ public class BotInit {
             utilityFunction.movePlayerDown(5);
 
             log.info("Event ended.");
+
+            webDriver.quit();
         } catch (InterruptedException var3) {
             log.error(var3.toString());
         }

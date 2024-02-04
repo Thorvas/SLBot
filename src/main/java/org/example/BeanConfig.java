@@ -31,7 +31,7 @@ public class BeanConfig {
     public ChromeOptions chromeOptions() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-blink-features=AutomationControlled");
-        //options.addArguments("--headless");
+        options.addArguments("--headless");
         options.addArguments("--disk-cache-dir=C:\\Temp\\SeleniumCache");
         options.addArguments("start-maximized");
         return options;

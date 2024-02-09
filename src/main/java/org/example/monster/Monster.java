@@ -9,6 +9,7 @@ import lombok.Data;
 
 @Data
 public class Monster {
+
     private int name;
     private int lvl;
     private int xPos;

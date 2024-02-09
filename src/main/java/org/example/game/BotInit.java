@@ -7,6 +7,8 @@ package org.example.game;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.Utility.UtilityMethods;
+import org.example.map.MapGrid;
+import org.example.node.Node;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -28,6 +30,9 @@ public class BotInit {
     @Autowired
     private UtilityMethods utilityFunction;
 
+    @Autowired
+    private MapGrid mapGrid;
+
     public BotInit() {
     }
 
@@ -45,15 +50,16 @@ public class BotInit {
             List<Map<String, Object>> npcIds = this.utilityFunction.getAllMobsNames();
             System.out.println(npcIds);
 
-            utilityFunction.movePlayerUp(5);
+            utilityFunction.movePlayerUp(10);
             utilityFunction.movePlayerRight(10);
             utilityFunction.movePlayerLeft(10);
-            utilityFunction.movePlayerDown(5);
+            utilityFunction.movePlayerDown(10);
 
             log.info("Event ended.");
 
             webDriver.quit();
         } catch (InterruptedException var3) {
+
             log.error(var3.toString());
         }
     }

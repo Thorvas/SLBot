@@ -5,11 +5,13 @@
 
 package org.example.Utility;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.node.Node;
 import org.example.player.Player;
 import org.example.player.UtilityPlayer;
 import org.openqa.selenium.JavascriptExecutor;
@@ -29,20 +31,23 @@ public class UtilityMethods {
     private UtilityPlayer utilityPlayer;
 
     public List<Map<String, Object>> getAllMobsNames() {
+
         JavascriptExecutor js = (JavascriptExecutor)this.webDriver;
         return (List<Map<String, Object>>) js.executeScript("return Object.entries(Engine.npcs.check()).map(([id, npc]) => ({id: id, name: npc.d.nick, x: npc.d.x, y: npc.d.y}));", new Object[0]);
     }
 
     public void printPlayerCoords() {
+
         JavascriptExecutor js = (JavascriptExecutor)this.webDriver;
 
-        Player player = utilityPlayer.updatePlayer(webDriver);
+        Player player = UtilityPlayer.updatePlayer(webDriver);
 
         log.info("Coordinate x: "+player.getX()+", Coordinate y:"+player.getY());
     }
 
     public void movePlayerUp(Integer distance) {
         try {
+
             Actions actions = new Actions(webDriver);
 
             for (int i = 0; i < distance; i++) {
@@ -62,6 +67,7 @@ public class UtilityMethods {
 
     public void movePlayerDown(Integer distance) {
         try {
+
             Actions actions = new Actions(webDriver);
 
             for (int i = 0; i < distance; i++) {
@@ -81,6 +87,7 @@ public class UtilityMethods {
 
     public void movePlayerRight(Integer distance) {
         try {
+
             Actions actions = new Actions(webDriver);
 
             for (int i = 0; i < distance; i++) {
@@ -100,6 +107,7 @@ public class UtilityMethods {
 
     public void movePlayerLeft(Integer distance) {
         try {
+
             Actions actions = new Actions(webDriver);
 
             for (int i = 0; i < distance; i++) {
@@ -113,7 +121,34 @@ public class UtilityMethods {
             }
 
         } catch (Exception e) {
+
             log.error(e.toString());
         }
+    }
+
+    public List<Node> convertToGrid() {
+
+        JavascriptExecutor js = (JavascriptExecutor) this.webDriver;
+
+        List<Map<String, Object>> nodes = (List<Map<String, Object>>) js.executeScript("return Engine.hero.getHeroNode().chunk.map.nodes.map(node => ({x: node.x, y: node.y, isBlocked: Engine.map.col.check(node.x, node.y)}));");
+
+        List<Node> readyNodes = new ArrayList<>();
+        for (Map<String, Object> obj : nodes) {
+
+            Node node = new Node();
+
+            Long x = (Long) obj.get("x");
+            Long y = (Long) obj.get("y");
+            Long isBlocked = (Long) obj.get("isBlocked");
+
+            node.setX(x.intValue());
+            node.setY(y.intValue());
+            node.setBlocked(isBlocked != 0);
+
+            readyNodes.add(node);
+        }
+
+        return readyNodes;
+
     }
 }

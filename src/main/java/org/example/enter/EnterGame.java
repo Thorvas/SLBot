@@ -24,7 +24,6 @@ public class EnterGame {
     }
 
     public void enterGame() {
-
         try {
 
             this.webDriver.get("https://margonem.pl");
@@ -69,7 +68,6 @@ public class EnterGame {
             TimeUnit.SECONDS.sleep(3L);
 
         } catch (Exception var7) {
-
             log.error(var7.toString());
         }
 

@@ -10,6 +10,8 @@ import org.example.Utility.UtilityMethods;
 import org.example.map.MapGrid;
 import org.example.node.Node;
 import org.example.pathfinding.Pathfinding;
+import org.example.player.Player;
+import org.example.player.UtilityPlayer;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -30,6 +32,9 @@ public class BotInit {
     private WebDriver webDriver;
     @Autowired
     private UtilityMethods utilityFunction;
+
+    @Autowired
+    private UtilityPlayer playerUtils;
 
     @Autowired
     private MapGrid mapGrid;
@@ -54,19 +59,22 @@ public class BotInit {
             List<Map<String, Object>> npcIds = this.utilityFunction.getAllMobsNames();
             System.out.println(npcIds);
 
+            Player player = playerUtils.updatePlayer();
+
             Node begin = new Node();
             Node target = new Node();
 
-            begin.setX(44);
-            begin.setY(56);
+            begin.setX(player.getX().intValue());
+            begin.setY(player.getY().intValue());
             begin.setBlocked(false);
 
-            target.setX(42);
-            target.setY(50);
-            target.setBlocked(false);
+            target.setX(39);
+            target.setY(51);
 
             System.out.println("RECONSTRUCTED PATH:");
-            System.out.println(aStar.findPath(begin, target));
+            List<Node> road = aStar.findPathToMonster(begin, target);
+
+            this.playerUtils.moveThroughPath(road);
 
 //            utilityFunction.movePlayerUp(10);
 //            utilityFunction.movePlayerRight(10);
@@ -75,7 +83,7 @@ public class BotInit {
 
             log.info("Event ended.");
 
-            webDriver.quit();
+
         } catch (InterruptedException var3) {
 
             log.error(var3.toString());

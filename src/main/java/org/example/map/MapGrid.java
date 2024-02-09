@@ -17,10 +17,11 @@ public class MapGrid {
     private List<Node> nodesToSearch = null;
 
     public void initMap() {
-        this.nodesToSearch = mapUtils.convertToGrid();
+        this.nodesToSearch = this.mapUtils.convertToGrid();
     }
 
     public Node getNode(int x, int y) {
+
 
         Node targetNode = null;
 
@@ -41,6 +42,28 @@ public class MapGrid {
         int[] directions = {-1, 0, 1, 0, -1};
 
         for (int i = 0; i < 4; i++) {
+
+            int newX = node.getX() + directions[i];
+            int newY = node.getY() + directions[i + 1];
+
+            Node neighbour = this.getNode(newX, newY);
+
+            if (neighbour != null && !neighbour.isBlocked()) {
+
+                neighbours.add(neighbour);
+            }
+        }
+
+        return neighbours;
+    }
+
+    public List<Node> getAllNeighbours(Node node) {
+
+        List<Node> neighbours = new ArrayList<>();
+
+        int[] directions = {-1, -1, -1, 0, -1, 1, 0, 1, 1, 1, 1, 0, 1, -1, 0, -1};
+
+        for (int i = 0; i < directions.length; i+=2) {
 
             int newX = node.getX() + directions[i];
             int newY = node.getY() + directions[i + 1];

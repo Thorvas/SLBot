@@ -33,18 +33,13 @@ public class Pathfinding {
         return path;
     }
 
-    public List<Node> findPath(Node startNode, Node targetNode) {
+    public List<Node> findPathToLocation(Node startNode, Node targetNode) {
 
         mapGrid.initMap();
 
         startNode.setGCost(0);
         startNode.setFCost(heuristics(startNode, targetNode));
-        PriorityQueue<Node> open = new PriorityQueue<>(new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return Integer.compare(o1.getFCost(), o2.getFCost());
-            }
-        });
+        PriorityQueue<Node> open = new PriorityQueue<>(Comparator.comparingInt(Node::getFCost));
 
         HashSet<Node> closed = new HashSet<>();
         open.add(startNode);
@@ -55,7 +50,6 @@ public class Pathfinding {
 
             if (current.getX() == targetNode.getX() && current.getY() == targetNode.getY()) {
 
-                System.out.println("Path found!");
                 return this.reconstructPath(current);
 
             }
@@ -66,7 +60,46 @@ public class Pathfinding {
                     neighbour.setCameFrom(current);
                     neighbour.setGCost(newGCost);
                     neighbour.setFCost(newGCost + heuristics(neighbour, targetNode));
-                    if (!open.contains(neighbour)) open.add(neighbour);
+                    if (open.contains(neighbour)) open.remove(neighbour);
+
+                    open.add(neighbour);
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<Node> findPathToMonster(Node startNode, Node targetNode) {
+
+        mapGrid.initMap();
+
+        startNode.setGCost(0);
+        startNode.setFCost(heuristics(startNode, targetNode));
+        PriorityQueue<Node> open = new PriorityQueue<>(Comparator.comparingInt(Node::getFCost));
+
+        HashSet<Node> closed = new HashSet<>();
+        open.add(startNode);
+
+        while (!open.isEmpty()) {
+            Node current = open.poll();
+            closed.add(current);
+
+            for (Node potentialNode : mapGrid.getAllNeighbours(targetNode)) {
+                if (current.getX() == potentialNode.getX() && current.getY() == potentialNode.getY()) {
+                    return this.reconstructPath(current);
+                }
+            }
+
+            for (Node neighbour : mapGrid.getNeighbours(current)) {
+                if (neighbour.isBlocked() || closed.contains(neighbour)) continue;
+                int newGCost = current.getGCost() + this.G_COST;
+                if (newGCost < neighbour.getGCost() || !open.contains(neighbour)) {
+                    neighbour.setCameFrom(current);
+                    neighbour.setGCost(newGCost);
+                    neighbour.setFCost(newGCost + heuristics(neighbour, targetNode));
+                    if (open.contains(neighbour)) open.remove(neighbour);
+
+                    open.add(neighbour);
                 }
             }
         }

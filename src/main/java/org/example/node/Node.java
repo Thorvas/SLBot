@@ -2,13 +2,13 @@ package org.example.node;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class Node {
 
-    private Node parent;
+    private Node cameFrom;
     private int x;
     private int y;
     private boolean isBlocked;
+    private int fCost = Integer.MAX_VALUE;
+    private int gCost = Integer.MAX_VALUE;
 }

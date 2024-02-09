@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.Utility.UtilityMethods;
 import org.example.map.MapGrid;
 import org.example.node.Node;
+import org.example.pathfinding.Pathfinding;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -33,6 +34,9 @@ public class BotInit {
     @Autowired
     private MapGrid mapGrid;
 
+    @Autowired
+    private Pathfinding aStar;
+
     public BotInit() {
     }
 
@@ -50,10 +54,24 @@ public class BotInit {
             List<Map<String, Object>> npcIds = this.utilityFunction.getAllMobsNames();
             System.out.println(npcIds);
 
-            utilityFunction.movePlayerUp(10);
-            utilityFunction.movePlayerRight(10);
-            utilityFunction.movePlayerLeft(10);
-            utilityFunction.movePlayerDown(10);
+            Node begin = new Node();
+            Node target = new Node();
+
+            begin.setX(44);
+            begin.setY(56);
+            begin.setBlocked(false);
+
+            target.setX(42);
+            target.setY(50);
+            target.setBlocked(false);
+
+            System.out.println("RECONSTRUCTED PATH:");
+            System.out.println(aStar.findPath(begin, target));
+
+//            utilityFunction.movePlayerUp(10);
+//            utilityFunction.movePlayerRight(10);
+//            utilityFunction.movePlayerLeft(10);
+//            utilityFunction.movePlayerDown(10);
 
             log.info("Event ended.");
 

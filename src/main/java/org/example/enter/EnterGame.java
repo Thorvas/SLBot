@@ -24,7 +24,7 @@ public class EnterGame {
     }
 
     public void enterGame() {
-        
+
         try {
 
             this.webDriver.get("https://margonem.pl");

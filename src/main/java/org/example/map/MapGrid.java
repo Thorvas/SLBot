@@ -14,9 +14,14 @@ public class MapGrid {
     @Autowired
     private UtilityMethods mapUtils;
 
+    private List<Node> nodesToSearch = null;
+
+    public void initMap() {
+        this.nodesToSearch = mapUtils.convertToGrid();
+    }
+
     public Node getNode(int x, int y) {
 
-        List<Node> nodesToSearch = mapUtils.convertToGrid();
         Node targetNode = null;
 
         for (Node node : nodesToSearch) {

@@ -1,5 +1,6 @@
 package org.example.move;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.map.MapGrid;
 import org.example.node.Node;
 import org.example.pathfinding.Pathfinding;
@@ -10,10 +11,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@Slf4j
 public class MoveModule {
-
-    @Autowired
-    private MapGrid mapGrid;
 
     @Autowired
     private Pathfinding pathFinder;
@@ -29,8 +28,7 @@ public class MoveModule {
             playerUtils.moveToNode(path.get(i), path.get(i+1));
         }
 
-
-        System.out.println(playerUtils.updatePlayer().getX() + ", " + playerUtils.updatePlayer().getY());
-        System.out.println(target.getX() + ", " + target.getY());
+        log.info(playerUtils.updatePlayer().getX() + ", " + playerUtils.updatePlayer().getY());
+        log.info(target.getX() + ", " + target.getY());
     }
 }

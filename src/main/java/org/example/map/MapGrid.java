@@ -1,6 +1,6 @@
 package org.example.map;
 
-import org.example.Utility.UtilityMethods;
+import org.example.utility.UtilityMethods;
 import org.example.node.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

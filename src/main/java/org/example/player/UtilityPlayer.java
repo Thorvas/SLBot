@@ -1,7 +1,7 @@
 package org.example.player;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.Utility.UtilityMethods;
+import org.example.utility.UtilityMethods;
 import org.example.node.Node;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -121,6 +121,7 @@ public class UtilityPlayer {
         }
     }
 
+    //TODO: Delete legacy method
 //    public void moveToNode(Node node) {
 //
 //        this.player = updatePlayer();

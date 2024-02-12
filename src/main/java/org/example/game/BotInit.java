@@ -6,13 +6,10 @@
 package org.example.game;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.Utility.UtilityMethods;
-import org.example.map.MapGrid;
+import org.example.utility.UtilityMethods;
+import org.example.enter.EnterGame;
 import org.example.move.MoveModule;
 import org.example.node.Node;
-import org.example.pathfinding.Pathfinding;
-import org.example.player.Player;
-import org.example.player.UtilityPlayer;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -35,16 +32,10 @@ public class BotInit {
     private UtilityMethods utilityFunction;
 
     @Autowired
-    private UtilityPlayer playerUtils;
-
-    @Autowired
-    private MapGrid mapGrid;
-
-    @Autowired
-    private Pathfinding aStar;
-
-    @Autowired
     private MoveModule moveModule;
+
+    @Autowired
+    private EnterGame enterGame;
 
     public BotInit() {
     }
@@ -52,6 +43,8 @@ public class BotInit {
     public void startBot() {
 
         try {
+
+            enterGame.enterGame();
 
             WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(60));
             wait.until(ExpectedConditions.attributeContains(By.tagName("body"), "class", "lang-pl"));
@@ -63,14 +56,7 @@ public class BotInit {
             List<Map<String, Object>> npcIds = this.utilityFunction.getAllMobsNames();
             System.out.println(npcIds);
 
-            Player player = playerUtils.updatePlayer();
-
-            Node begin = new Node();
             Node target = new Node();
-
-            begin.setX(player.getX().intValue());
-            begin.setY(player.getY().intValue());
-            begin.setBlocked(false);
 
             target.setX(38);
             target.setY(51);

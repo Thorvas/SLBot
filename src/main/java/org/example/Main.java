@@ -5,7 +5,6 @@
 
 package org.example;
 
-import org.example.enter.EnterGame;
 import org.example.game.BotInit;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -17,10 +16,8 @@ public class Main {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(BeanConfig.class);
 
-        EnterGame enterGame = context.getBean(EnterGame.class);
         BotInit botInit = context.getBean(BotInit.class);
 
-        enterGame.enterGame();
         botInit.startBot();
     }
 }

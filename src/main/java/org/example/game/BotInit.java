@@ -8,6 +8,7 @@ package org.example.game;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Utility.UtilityMethods;
 import org.example.map.MapGrid;
+import org.example.move.MoveModule;
 import org.example.node.Node;
 import org.example.pathfinding.Pathfinding;
 import org.example.player.Player;
@@ -42,6 +43,9 @@ public class BotInit {
     @Autowired
     private Pathfinding aStar;
 
+    @Autowired
+    private MoveModule moveModule;
+
     public BotInit() {
     }
 
@@ -49,7 +53,7 @@ public class BotInit {
 
         try {
 
-            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
+            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(60));
             wait.until(ExpectedConditions.attributeContains(By.tagName("body"), "class", "lang-pl"));
 
             log.info("Bot initialized.");
@@ -68,18 +72,10 @@ public class BotInit {
             begin.setY(player.getY().intValue());
             begin.setBlocked(false);
 
-            target.setX(39);
+            target.setX(38);
             target.setY(51);
 
-            System.out.println("RECONSTRUCTED PATH:");
-            List<Node> road = aStar.findPathToMonster(begin, target);
-
-            this.playerUtils.moveThroughPath(road);
-
-//            utilityFunction.movePlayerUp(10);
-//            utilityFunction.movePlayerRight(10);
-//            utilityFunction.movePlayerLeft(10);
-//            utilityFunction.movePlayerDown(10);
+            moveModule.moveToTarget(target);
 
             log.info("Event ended.");
 

@@ -1,15 +1,19 @@
 package org.example.player;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.Utility.UtilityMethods;
 import org.example.node.Node;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
+@Slf4j
 public class UtilityPlayer {
 
     @Autowired
@@ -35,28 +39,117 @@ public class UtilityPlayer {
         return player;
     }
 
-    public void moveThroughPath(List<Node> nodes) {
 
-        this.player = updatePlayer();
+    public void movePlayerUp(Integer distance) {
+        try {
+
+            Actions actions = new Actions(webDriver);
+
+            for (int i = 0; i < distance; i++) {
+
+                log.info("Moving up..");
+                actions.keyDown(Keys.ARROW_UP).perform();
+                TimeUnit.MILLISECONDS.sleep(175);
+                actions.keyUp(Keys.ARROW_UP).perform();
+
+                utils.printPlayerCoords();
+            }
+
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
+    }
+
+    public void movePlayerDown(Integer distance) {
+        try {
+
+            Actions actions = new Actions(webDriver);
+
+            for (int i = 0; i < distance; i++) {
+
+                log.info("Moving down..");
+                actions.keyDown(Keys.ARROW_DOWN).perform();
+                TimeUnit.MILLISECONDS.sleep(175);
+                actions.keyUp(Keys.ARROW_DOWN).perform();
+
+                utils.printPlayerCoords();
+            }
+
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
+    }
+
+    public void movePlayerRight(Integer distance) {
+        try {
+
+            Actions actions = new Actions(webDriver);
+
+            for (int i = 0; i < distance; i++) {
+
+                log.info("Moving right..");
+                actions.keyDown(Keys.ARROW_RIGHT).perform();
+                TimeUnit.MILLISECONDS.sleep(175);
+                actions.keyUp(Keys.ARROW_RIGHT).perform();
+
+                utils.printPlayerCoords();
+            }
+
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
+    }
+
+    public void movePlayerLeft(Integer distance) {
+        try {
+
+            Actions actions = new Actions(webDriver);
+
+            for (int i = 0; i < distance; i++) {
+
+                log.info("Moving left..");
+                actions.keyDown(Keys.ARROW_LEFT).perform();
+                TimeUnit.MILLISECONDS.sleep(175);
+                actions.keyUp(Keys.ARROW_LEFT).perform();
+
+                utils.printPlayerCoords();
+            }
+
+        } catch (Exception e) {
+
+            log.error(e.toString());
+        }
+    }
+
+//    public void moveToNode(Node node) {
+//
+//        this.player = updatePlayer();
+//
+//        if (this.player != null) {
+//            if (node.getY() == player.getY() - 1) {
+//                movePlayerUp(1);
+//            } else if (node.getY() == player.getY() + 1) {
+//                movePlayerDown(1);
+//            } else if (node.getX() == player.getX() - 1) {
+//                movePlayerLeft(1);
+//            } else if (node.getX() == player.getX() + 1) {
+//                movePlayerRight(1);
+//            }
+//
+//        }
+//    }
+
+    public void moveToNode(Node sourceNode, Node targetNode) {
 
         if (this.player != null) {
-
-            for (int i = 1; i < nodes.size(); i++) {
-                if (nodes.get(i).getY() < player.getY()) {
-                    utils.movePlayerUp(1);
-                }
-                else if (nodes.get(i).getY() > player.getY()) {
-                    utils.movePlayerDown(1);
-                }
-                else if (nodes.get(i).getX() < player.getX()) {
-                    utils.movePlayerLeft(1);
-                }
-                else if (nodes.get(i).getX() > player.getX()) {
-                    utils.movePlayerRight(1);
-                }
-                else {
-                    System.out.println("Road reached!");
-                }
+            if (targetNode.getY() == sourceNode.getY() - 1) {
+                movePlayerUp(1);
+            } else if (targetNode.getY() == sourceNode.getY() + 1) {
+                movePlayerDown(1);
+            } else if (targetNode.getX() == sourceNode.getX() - 1) {
+                movePlayerLeft(1);
+            } else if (targetNode.getX() == sourceNode.getX() + 1) {
+                movePlayerRight(1);
             }
 
         }

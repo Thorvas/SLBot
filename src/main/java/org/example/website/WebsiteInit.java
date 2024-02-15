@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -15,6 +16,12 @@ public class WebsiteInit {
 
     @Autowired
     private WebDriver webDriver;
+
+    @Value("${provided.login}")
+    private String login;
+
+    @Value("${provided.password")
+    private String password;
 
     public void openWebsite() {
 
@@ -45,7 +52,7 @@ public class WebsiteInit {
     public void insertLogin() {
         WebElement login_Field = this.webDriver.findElement(By.id("login-input"));
         log.info("Inserting login...");
-        login_Field.sendKeys("kacpicygan123");
+        login_Field.sendKeys(login);
         log.info("Login inserted.");
     }
 

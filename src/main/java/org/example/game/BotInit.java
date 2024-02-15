@@ -6,6 +6,7 @@
 package org.example.game;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.monster.Monster;
 import org.example.utility.UtilityMethods;
 import org.example.enter.EnterGame;
 import org.example.move.MoveModule;
@@ -53,12 +54,14 @@ public class BotInit {
             JavascriptExecutor js = (JavascriptExecutor) this.webDriver;
             log.info("Moving player to coordinates...");
             TimeUnit.SECONDS.sleep(3L);
-            List<Map<String, Object>> npcIds = this.utilityFunction.getAllMobsNames();
-            System.out.println(npcIds);
+//            List<Map<String, Object>> npcIds = this.utilityFunction.getAllMobsNames();
+//            System.out.println(npcIds);
+
+            List<Monster> monsters = utilityFunction.convertToMonsters();
 
             Node target = new Node();
 
-            target.setX(38);
+            target.setX(39);
             target.setY(51);
 
             moveModule.moveToTarget(target);

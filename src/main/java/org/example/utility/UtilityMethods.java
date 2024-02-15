@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.monster.Monster;
 import org.example.node.Node;
 import org.example.player.Player;
 import org.example.player.UtilityPlayer;
@@ -65,5 +66,45 @@ public class UtilityMethods {
         return readyNodes;
     }
 
+    public List<Monster> convertToMonsters() {
+
+        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+
+        List<Map<String, Object>> monsters = (List<Map<String, Object>>) js.executeScript("return Object.entries(Engine.npcs.check()).map(([id, npc]) => ({id: id, nick: npc.d.nick, x: npc.d.x, y: npc.d.y, level: npc.d.lvl, attackable: npc.d.type}));");
+
+        List<Monster> returnedMonsters = new ArrayList<>();
+
+        for (Map<String, Object> elem : monsters) {
+
+            Long attackable = (Long) elem.get("attackable");
+
+            if (attackable.intValue() == 2) {
+
+                Monster monster = new Monster();
+                Node node = new Node();
+
+                Long x = (Long) elem.get("x");
+                Long y = (Long) elem.get("y");
+                String nick = (String) elem.get("nick");
+                Long level = (Long) elem.get("level");
+
+                node.setX(x.intValue());
+                node.setY(y.intValue());
+                node.setBlocked(false);
+
+                monster.setName(nick);
+                monster.setPosition(node);
+                monster.setLevel(level.intValue());
+
+                returnedMonsters.add(monster);
+
+                System.out.println("NICK: " + nick);
+                System.out.println("ATTACKABLE:" + attackable);
+
+            }
+        }
+
+        return returnedMonsters;
+    }
 
 }

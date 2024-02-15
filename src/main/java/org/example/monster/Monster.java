@@ -6,12 +6,12 @@
 package org.example.monster;
 
 import lombok.Data;
+import org.example.node.Node;
 
 @Data
 public class Monster {
 
-    private int name;
-    private int lvl;
-    private int xPos;
-    private int yPos;
+    private String name;
+    private int level;
+    private Node position;
 }

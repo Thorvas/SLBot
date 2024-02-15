@@ -22,7 +22,7 @@ public class MoveModule {
 
     public void moveToTarget(Node target) {
 
-        List<Node> path = pathFinder.findPathToLocation(playerUtils.updatePlayer().getNode(), target);
+        List<Node> path = pathFinder.findPathToMonster(playerUtils.updatePlayer().getNode(), target);
 
         for (int i = 0; i < path.size() - 1; i++) {
             playerUtils.moveToNode(path.get(i), path.get(i+1));

@@ -6,6 +6,7 @@
 package org.example.game;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.iteration.IterateBot;
 import org.example.monster.Monster;
 import org.example.utility.UtilityMethods;
 import org.example.enter.EnterGame;
@@ -14,6 +15,7 @@ import org.example.node.Node;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class BotInit {
     private WebDriver webDriver;
     @Autowired
     private UtilityMethods utilityFunction;
+
+    @Autowired
+    private IterateBot bot;
 
     @Autowired
     private MoveModule moveModule;
@@ -52,21 +57,18 @@ public class BotInit {
 
             log.info("Bot initialized.");
             JavascriptExecutor js = (JavascriptExecutor) this.webDriver;
+
+            utilityFunction.turnAutoLootOn();
+
             log.info("Moving player to coordinates...");
             TimeUnit.SECONDS.sleep(3L);
-//            List<Map<String, Object>> npcIds = this.utilityFunction.getAllMobsNames();
-//            System.out.println(npcIds);
+            List<Map<String, Object>> npcIds = this.utilityFunction.getAllMobsNames();
+            System.out.println(npcIds);
+            while (true) {
+                bot.processWalkAndAttack();
+                TimeUnit.MILLISECONDS.sleep(1500);
+            }
 
-            List<Monster> monsters = utilityFunction.convertToMonsters();
-
-            Node target = new Node();
-
-            target.setX(39);
-            target.setY(51);
-
-            moveModule.moveToTarget(target);
-
-            log.info("Event ended.");
 
 
         } catch (InterruptedException var3) {

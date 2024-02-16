@@ -8,14 +8,15 @@ package org.example.utility;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.monster.Monster;
 import org.example.node.Node;
 import org.example.player.Player;
 import org.example.player.UtilityPlayer;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -66,6 +67,49 @@ public class UtilityMethods {
         return readyNodes;
     }
 
+    public Monster findClosestMonster(List<Monster> monsters) {
+
+        Monster closestMonster = null;
+        Integer euclides = Integer.MAX_VALUE;
+        Player player = utilityPlayer.updatePlayer();
+
+        for (Monster monster : monsters) {
+
+            int currDistance = (int) Math.sqrt(Math.pow((monster.getPosition().getX() - player.getX()), 2) + Math.pow((monster.getPosition().getY() - player.getY()), 2));
+            if (currDistance < euclides) {
+
+                euclides = currDistance;
+                closestMonster = monster;
+            }
+        }
+
+        return closestMonster;
+    }
+
+    public void attackMob() {
+
+        try {
+            Actions action = new Actions(webDriver);
+
+            action.keyDown("X").perform();
+            TimeUnit.MILLISECONDS.sleep(195);
+            action.keyUp("X").perform();
+        } catch (Exception exc) {
+            log.error(exc.toString());
+        }
+    }
+
+    public void turnAutoLootOn() {
+
+        WebElement auto_loot_widget = this.webDriver.findElement(By.cssSelector("[widget-index='4']"));
+
+        auto_loot_widget.click();
+
+        WebElement turn_on_button = this.webDriver.findElement(By.xpath("//*[contains(@class, 'turn-on-btn')]"));
+
+        turn_on_button.click();
+    }
+
     public List<Monster> convertToMonsters() {
 
         JavascriptExecutor js = (JavascriptExecutor) webDriver;
@@ -97,10 +141,6 @@ public class UtilityMethods {
                 monster.setLevel(level.intValue());
 
                 returnedMonsters.add(monster);
-
-                System.out.println("NICK: " + nick);
-                System.out.println("ATTACKABLE:" + attackable);
-
             }
         }
 

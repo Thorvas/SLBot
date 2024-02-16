@@ -27,8 +27,5 @@ public class MoveModule {
         for (int i = 0; i < path.size() - 1; i++) {
             playerUtils.moveToNode(path.get(i), path.get(i+1));
         }
-
-        log.info(playerUtils.updatePlayer().getX() + ", " + playerUtils.updatePlayer().getY());
-        log.info(target.getX() + ", " + target.getY());
     }
 }

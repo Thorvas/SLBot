@@ -49,10 +49,10 @@ public class UtilityPlayer {
 
                 log.info("Moving up..");
                 actions.keyDown(Keys.ARROW_UP).perform();
-                TimeUnit.MILLISECONDS.sleep(175);
+                TimeUnit.MILLISECONDS.sleep(195);
                 actions.keyUp(Keys.ARROW_UP).perform();
 
-                utils.printPlayerCoords();
+//                utils.printPlayerCoords();
             }
 
         } catch (Exception e) {
@@ -69,10 +69,10 @@ public class UtilityPlayer {
 
                 log.info("Moving down..");
                 actions.keyDown(Keys.ARROW_DOWN).perform();
-                TimeUnit.MILLISECONDS.sleep(175);
+                TimeUnit.MILLISECONDS.sleep(195);
                 actions.keyUp(Keys.ARROW_DOWN).perform();
 
-                utils.printPlayerCoords();
+//                utils.printPlayerCoords();
             }
 
         } catch (Exception e) {
@@ -89,10 +89,10 @@ public class UtilityPlayer {
 
                 log.info("Moving right..");
                 actions.keyDown(Keys.ARROW_RIGHT).perform();
-                TimeUnit.MILLISECONDS.sleep(175);
+                TimeUnit.MILLISECONDS.sleep(195);
                 actions.keyUp(Keys.ARROW_RIGHT).perform();
 
-                utils.printPlayerCoords();
+//                utils.printPlayerCoords();
             }
 
         } catch (Exception e) {
@@ -109,10 +109,10 @@ public class UtilityPlayer {
 
                 log.info("Moving left..");
                 actions.keyDown(Keys.ARROW_LEFT).perform();
-                TimeUnit.MILLISECONDS.sleep(175);
+                TimeUnit.MILLISECONDS.sleep(195);
                 actions.keyUp(Keys.ARROW_LEFT).perform();
 
-                utils.printPlayerCoords();
+//                utils.printPlayerCoords();
             }
 
         } catch (Exception e) {
